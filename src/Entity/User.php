@@ -6,11 +6,24 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get", "post"},
+ *     normalizationContext={
+ *        "groups" ={"read"}
+ *     }
+ * )
+ * @UniqueEntity("email")
+ * @UniqueEntity("personalID")
  */
 class User implements UserInterface
 {
@@ -18,11 +31,14 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=3, max=255)
      */
     private $email;
 
@@ -34,8 +50,24 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Length(min=4, max=255)
+     * @TODO check regex pattern
+     * @Assert\Regex(
+     *     pattern="/ ^(?=.{4,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/",
+     *     message="Password should contain at least one upper case letter and one lower case and one special character."
+     * )
      */
     private $password;
+
+    /**
+     * Virtual field used only for create/edit user forms
+     * @Assert/Expression(
+     *    "this.getPassword() === this.getPasswordRepeated()",
+     *    message="Passwords does not match! Please enter identical passwords."
+     * )
+     */
+    private $passwordRepeated;
 
     /**
      * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="user")
@@ -44,18 +76,29 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=9, max=20)
      */
     private $personalID;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=255)
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=4, max=255)
      */
     private $lastName;
+
+    public function __toString()
+    {
+        return $this->email;
+    }
 
     public function __construct()
     {
@@ -208,4 +251,18 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getPasswordRepeated(): ?string
+    {
+        return $this->passwordRepeated;
+    }
+
+    public function setPasswordRepeated(string $passwordRepeated): self
+    {
+        $this->passwordRepeated = $passwordRepeated;
+
+        return $this;
+    }
+
+
 }

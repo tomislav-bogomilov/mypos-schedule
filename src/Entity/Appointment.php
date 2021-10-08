@@ -7,7 +7,10 @@ use App\Repository\AppointmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  * @ORM\Entity(repositoryClass=AppointmentRepository::class)
  */
 class Appointment
