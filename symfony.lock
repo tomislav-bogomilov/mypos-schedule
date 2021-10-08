@@ -1,4 +1,18 @@
 {
+    "api-platform/core": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "05b57782a78c21a664a42055dc11cf1954ca36bb"
+        },
+        "files": [
+            "./config/packages/api_platform.yaml",
+            "./config/routes/api_platform.yaml",
+            "./src/Entity/.gitignore"
+        ]
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.4"
     },
@@ -97,6 +111,9 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "fig/link-util": {
+        "version": "1.1.2"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
@@ -109,8 +126,29 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
     },
+    "nelmio/cors-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "6bea22e6c564fba3a1391615cada1437d0bde39c"
+        },
+        "files": [
+            "./config/packages/nelmio_cors.yaml"
+        ]
+    },
     "nikic/php-parser": {
         "version": "v4.13.0"
+    },
+    "phpdocumentor/reflection-common": {
+        "version": "2.2.0"
+    },
+    "phpdocumentor/reflection-docblock": {
+        "version": "5.2.2"
+    },
+    "phpdocumentor/type-resolver": {
+        "version": "1.5.1"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -118,8 +156,14 @@
     "psr/container": {
         "version": "1.1.1"
     },
+    "psr/link": {
+        "version": "1.0.0"
+    },
     "psr/log": {
         "version": "1.1.4"
+    },
+    "symfony/asset": {
+        "version": "v4.4.27"
     },
     "symfony/cache": {
         "version": "v4.4.31"
@@ -166,6 +210,9 @@
     },
     "symfony/event-dispatcher-contracts": {
         "version": "v1.1.9"
+    },
+    "symfony/expression-language": {
+        "version": "v4.4.30"
     },
     "symfony/filesystem": {
         "version": "v4.4.27"
@@ -257,6 +304,9 @@
     "symfony/property-access": {
         "version": "v4.4.30"
     },
+    "symfony/property-info": {
+        "version": "v4.4.31"
+    },
     "symfony/proxy-manager-bridge": {
         "version": "v4.4.27"
     },
@@ -298,17 +348,56 @@
     "symfony/security-http": {
         "version": "v4.4.30"
     },
+    "symfony/serializer": {
+        "version": "v4.4.31"
+    },
     "symfony/service-contracts": {
         "version": "v2.4.0"
     },
     "symfony/stopwatch": {
         "version": "v4.4.27"
     },
+    "symfony/translation-contracts": {
+        "version": "v1.1.10"
+    },
+    "symfony/twig-bridge": {
+        "version": "v4.4.27"
+    },
+    "symfony/twig-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "73baff3f7b3cea12a73812a7cfd2c0924a9e250f"
+        },
+        "files": [
+            "./config/packages/test/twig.yaml",
+            "./config/packages/twig.yaml",
+            "./templates/base.html.twig"
+        ]
+    },
+    "symfony/validator": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "3eb8df139ec05414489d55b97603c5f6ca0c44cb"
+        },
+        "files": [
+            "./config/packages/test/validator.yaml",
+            "./config/packages/validator.yaml"
+        ]
+    },
     "symfony/var-dumper": {
         "version": "v4.4.31"
     },
     "symfony/var-exporter": {
         "version": "v4.4.31"
+    },
+    "symfony/web-link": {
+        "version": "v4.4.27"
     },
     "symfony/web-server-bundle": {
         "version": "3.3",
@@ -321,5 +410,14 @@
     },
     "symfony/yaml": {
         "version": "v4.4.29"
+    },
+    "twig/twig": {
+        "version": "v2.13.1"
+    },
+    "webmozart/assert": {
+        "version": "1.10.0"
+    },
+    "willdurand/negotiation": {
+        "version": "3.0.0"
     }
 }
