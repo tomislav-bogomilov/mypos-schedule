@@ -8,11 +8,16 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Faker\Factory;
 
-class UserFixtures extends Fixture
+class UserFixtures extends BaseFixtures
 {
+    public const ADMIN_USER_REFERENCE = 'admin-user';
+    public const REGULAR_USER_REFERENCE = 'regular-user';
+
+    /**
+     * @var UserPasswordEncoderInterface
+     */
     private $encoder;
 
-    private $generator;
 
     /**
      * UserFixtures constructor.
@@ -20,8 +25,8 @@ class UserFixtures extends Fixture
      */
     public function __construct(UserPasswordEncoderInterface  $encoder)
     {
+        parent::__construct();
         $this->encoder = $encoder;
-        $this->generator = Factory::create("bg_BG");
     }
 
     /**
@@ -32,12 +37,14 @@ class UserFixtures extends Fixture
         // create administrator user
         $adminUser = $this->createRandomUser('admin@mypos.bg', 'admin#369');
         $manager->persist($adminUser);
+        $this->addReference(self::ADMIN_USER_REFERENCE, $adminUser);
 
         // add random users
         for ($userCounter = 0; $userCounter < 20; $userCounter++) {
             // @TODO add reference for Appointments
             $newRandomeUser = $this->createRandomUser();
             $manager->persist($newRandomeUser);
+            $this->addReference(self::REGULAR_USER_REFERENCE . '_' . $userCounter, $newRandomeUser);
         }
 
         $manager->flush();
