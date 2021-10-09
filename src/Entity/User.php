@@ -62,7 +62,7 @@ class User implements UserInterface
 
     /**
      * Virtual field used only for create/edit user forms
-     * @Assert/Expression(
+     * @Assert\Expression(
      *    "this.getPassword() === this.getPasswordRepeated()",
      *    message="Passwords does not match! Please enter identical passwords."
      * )
