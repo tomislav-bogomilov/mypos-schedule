@@ -5,11 +5,17 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AppointmentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
  *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={"get", "post"},
+ *     denormalizationContext={
+ *        "groups" ={"write"}
+ *     }
+ *
  * )
  * @ORM\Entity(repositoryClass=AppointmentRepository::class)
  */
@@ -25,21 +31,27 @@ class Appointment
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="appointments")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read"})
      */
     private $user;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
+     * @Groups({"read", "write"})
      */
     private $startDateTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
+     * @Groups({"read", "write"})
      */
     private $endDateTime;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
      */
     private $comment;
 
