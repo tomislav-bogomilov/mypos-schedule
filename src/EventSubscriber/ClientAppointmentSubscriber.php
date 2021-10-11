@@ -10,7 +10,6 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 class ClientAppointmentSubscriber implements EventSubscriberInterface
 {
@@ -30,11 +29,11 @@ class ClientAppointmentSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['getAuthenticatedClient', EventPriorities::PRE_WRITE]
+            KernelEvents::VIEW => ['setAuthenticatedClient', EventPriorities::PRE_WRITE]
         ];
     }
 
-    public function getAuthenticatedClient(ViewEvent $event)
+    public function setAuthenticatedClient(ViewEvent $event)
     {
         $entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
