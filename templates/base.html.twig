@@ -12,7 +12,35 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}dsadsa{% endblock %}
+    <body class="container-fluid">
+        {% block header %}
+            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+                <div class="container">
+                    <a class="navbar-brand" href="#">Schedule</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">History</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Make appointment</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        {% endblock %}
+
+        {% block body %}{% endblock %}
+
+        {% block footer %}
+            <div class="navbar fixed-bottom">Tommy myPOS Schedule task &copy;</div>
+        {% endblock %}
     </body>
 </html>

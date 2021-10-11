@@ -13,7 +13,7 @@ class ScheduleController extends AbstractController
      */
     public function welcome(): Response
     {
-        return $this->render('base.html.twig');
+        return $this->render('dashboard/main.html.twig');
     }
 
     /**
