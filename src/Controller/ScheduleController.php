@@ -9,6 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class ScheduleController extends AbstractController
 {
     /**
+     * @Route("/", name="default_welcome")
+     */
+    public function welcome(): Response
+    {
+        return $this->render('base.html.twig');
+    }
+
+    /**
      * @Route("/schedule", name="schedule")
      */
     public function index(): Response
