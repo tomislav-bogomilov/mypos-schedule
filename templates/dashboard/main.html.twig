@@ -2,47 +2,12 @@
 
 {% block body %}
     <!-- Page Content -->
-    <div class="row">
+    <div class="row" style="padding-top:1.5rem;">
         <br><br>
-
-        <h4><small></small></h4>
         <hr>
         <h2>Appointments history</h2>
         <h5><span class="glyphicon glyphicon-time"></span> Current time, Oct 24, 2021.</h5>
         <p>Browsing your appointments history. Upcoming appointments can be canceled.</p>
         <hr>
-    </div>
-
-    <div class="row">
-        <table class="table table-striped table-bordered">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Date</th>
-                <th scope="col">Name</th>
-                <th scope="col">Comment</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">3</th>
-                <td>{{ "+1 day"|date("d.m.Y") }}</td>
-                <td>{{ 'Charles P.' }}</td>
-                <td>- no comment -</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>{{ "-1 day"|date("d.m.Y") }}</td>
-                <td>{{ 'Simeon V.' }}</td>
-                <td>- no comment -</td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>{{ "-15 days"|date("d.m.Y") }}</td>
-                <td>{{ 'Slovan S.' }}</td>
-                <td>- no comment -</td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 {% endblock %}
