@@ -1,13 +1,29 @@
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
 export default class AppointmentsTable extends Component {
-    render() {
-        const appointments = [
-            { id: 1, date: '12.01.2021', name: 'Simeon VV.', comment: '-- no comment --'},
-            { id: 2, date: '15.10.2021', name: 'Charles PP', comment: '-- no comment --'},
-            { id: 3, date: '02.11.2021', name: 'Slovan S.', comment: '-- no comment --'},
-        ];
+    constructor(props) {
+        super(props);
 
+        const { defaultHighlightedRowId } = props;
+
+        this.state = {
+            highlightedRowId: null,
+            appointments: [
+                {id: 1, date: '12.01.2021', name: 'Simeon VV.', comment: '-- no comment --'},
+                {id: 2, date: '15.10.2021', name: 'Charles PP', comment: '-- no comment --'},
+                {id: 3, date: '02.11.2021', name: 'Slovan S.', comment: '-- no comment --'}
+            ]
+        }
+    }
+
+    handleClickHighlight(appointmentId, event) {
+        this.setState({ highlightedRowId: appointmentId });
+    }
+
+    render() {
+        const { appointments } = this.state;
+        const { highlightedRowId } = this.state;
 
         return (
             <table className="table table-striped table-bordered">
@@ -22,7 +38,11 @@ export default class AppointmentsTable extends Component {
                 <tbody>
                 {appointments.map((appointment) => {
                     return (
-                        <tr key={ appointment.id }>
+                        <tr
+                            key={ appointment.id }
+                            className={ highlightedRowId === appointment.id ? 'table-info' : '' }
+                            onClick={ (event) => this.handleClickHighlight(appointment.id, event) }
+                        >
                             <td>{ appointment.id }</td>
                             <td>{ appointment.date }</td>
                             <td>{ appointment.name }</td>
@@ -35,3 +55,7 @@ export default class AppointmentsTable extends Component {
         );
     }
 }
+
+AppointmentsTable.propTypes = {
+    defaultHighlightedRowId: PropTypes.number
+};
