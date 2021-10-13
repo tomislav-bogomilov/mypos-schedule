@@ -1,11 +1,21 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
+import { getAllAppointments } from "../Api/retrieve_appointments";
 
 export default class AppointmentsTable extends Component {
     constructor(props) {
         super(props);
 
         const { defaultHighlightedRowId } = props;
+
+        getAllAppointments()
+            .then((data) => {
+                const items = data['hydra:member'];
+                items.map((item, index) => {
+                    console.log(index, item);
+                });
+
+        });
 
         this.state = {
             highlightedRowId: null,

@@ -9,8 +9,8 @@ import AppointmentsTable from './js/Components/AppointmentsTable';
 import AppointmentForm from './js/Components/AppointmentForm';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import calendarBootstrap from '@fullcalendar/bootstrap';
+import { getAllAppointments } from "./js/Api/retrieve_appointments";
 
 const predicate = 'awesome';
 
@@ -27,18 +27,25 @@ if (document.getElementById('make-appointment-form')) {
 }
 
 if (document.getElementById('main-dashboard')) {
-    render(
-        <FullCalendar
-            plugins={[ timeGridPlugin, calendarBootstrap]}
-            initialView="timeGridWeek"
-            weekends={false}
-            events={[
-                { title: 'event 1', date: '2021-10-12 12:10:10' },
-                { title: 'event 2', date: '2019-04-02' }
-            ]}
-        />,
-        document.getElementById('main-dashboard')
-    );
+    let allAppointments = [];
+    getAllAppointments()
+        .then((data) => {
+            const items = data['hydra:member'];
+            items.map((item, index) => {
+                allAppointments.push({'title': item.user.firstName, date: item.startDateTime.slice(0, 19).replace('T', ' ')})
+            });
+
+            render(
+                <FullCalendar
+                    plugins={[ timeGridPlugin, calendarBootstrap]}
+                    initialView="timeGridWeek"
+                    weekends={false}
+                    events={allAppointments}
+                />,
+                document.getElementById('main-dashboard')
+            );
+
+        });
 }
 
 
