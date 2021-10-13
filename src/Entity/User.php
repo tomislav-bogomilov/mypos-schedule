@@ -39,6 +39,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      * @Assert\Length(min=3, max=255)
+     * @Groups({"read"})
      */
     private $email;
 
@@ -78,6 +79,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      * @Assert\Length(min=9, max=20)
+     * @Groups({"read"})
      */
     private $personalID;
 
@@ -85,6 +87,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=255)
+     * @Groups({"read"})
      */
     private $firstName;
 
@@ -92,6 +95,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min=4, max=255)
+     * @Groups({"read"})
      */
     private $lastName;
 
