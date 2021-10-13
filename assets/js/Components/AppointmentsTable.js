@@ -1,71 +1,105 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import { getAllAppointments } from "../Api/retrieve_appointments";
+import { getPaginatedAppointments } from "../Api/retrieve_appointments";
+import ReactPaginate from 'react-paginate';
+import ReactDOM from 'react-dom';
+
 
 export default class AppointmentsTable extends Component {
     constructor(props) {
         super(props);
 
-        const { defaultHighlightedRowId } = props;
-
-        getAllAppointments()
-            .then((data) => {
-                const items = data['hydra:member'];
-                items.map((item, index) => {
-                    console.log(index, item);
-                });
-
-        });
+        this.handlePageClick = this.handlePageClick.bind(this);
 
         this.state = {
-            highlightedRowId: null,
-            appointments: [
-                {id: 1, date: '12.01.2021', name: 'Simeon VV.', comment: '-- no comment --'},
-                {id: 2, date: '15.10.2021', name: 'Charles PP', comment: '-- no comment --'},
-                {id: 3, date: '02.11.2021', name: 'Slovan S.', comment: '-- no comment --'}
-            ]
+            appointments: [],
+            loading: false,
+            currentPage: 1,
+            appointmentsPerPage: 7
         }
     }
 
-    handleClickHighlight(appointmentId, event) {
-        this.setState({ highlightedRowId: appointmentId });
+     getAppointments = async(page) => {
+        getPaginatedAppointments(page)
+            .then((data) => {
+                const items = data['hydra:member'];
+                this.setState({ appointments: [] });
+                items.map((item, index) => {
+                    const preparedAppointment = {
+                        id: item.id,
+                        date: item.startDateTime.slice(0, 19).replace('T', ' '),
+                        name: item.user.firstName,
+                        comment: item.comment
+
+                    };
+                    this.setState({loading: false});
+                    this.setState({ appointments: [...this.state.appointments, preparedAppointment] });
+                });
+
+                const pages = data['hydra:totalItems']/7;
+
+                ReactDOM.render(
+                    <ReactPaginate
+                        previousLabel={'prev'}
+                        nextLabel={'next'}
+                        pageCount={pages}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={'pagination justify-content-center'}
+                        activeClassName={'active'}
+                        pageClassName={'page-item'}
+                        pageLinkClassName={'page-link'}
+                        previousClassName={'page-item'}
+                        previousLinkClassName={'page-link'}
+                        nextClassName={'page-item'}
+                        nextLinkClassName={'page-link'}
+                        breakLinkClassName={'page-link'}
+                    />,
+                    document.getElementById('paginator'));
+
+            });
+    };
+
+    componentDidMount() {
+        this.getAppointments(this.state.currentPage);
+    }
+
+    handlePageClick(data) {
+        // fix paginator indexing from page 0
+        const page = data.selected + 1;
+        this.getAppointments(page);
     }
 
     render() {
-        const { appointments } = this.state;
-        const { highlightedRowId } = this.state;
+        const { appointments, appointmentsPerPage, loading, currentPage } = this.state;
 
         return (
-            <table className="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Comment</th>
-                </tr>
-                </thead>
-                <tbody>
-                {appointments.map((appointment) => {
-                    return (
-                        <tr
-                            key={ appointment.id }
-                            className={ highlightedRowId === appointment.id ? 'table-info' : '' }
-                            onClick={ (event) => this.handleClickHighlight(appointment.id, event) }
-                        >
-                            <td>{ appointment.id }</td>
-                            <td>{ appointment.date }</td>
-                            <td>{ appointment.name }</td>
-                            <td>{ appointment.comment }</td>
-                        </tr>
-                    );
-                })}
-                </tbody>
-            </table>
+            <div>
+                <table className="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Comment</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {appointments.map((appointment) => {
+                        return (
+                            <tr key={ appointment.id }>
+                                <td>{ appointment.id }</td>
+                                <td>{ appointment.date }</td>
+                                <td>{ appointment.name }</td>
+                                <td>{ appointment.comment }</td>
+                            </tr>
+                        );
+                    })}
+                    </tbody>
+                </table>
+                <nav id="paginator">
+                </nav>
+            </div>
+
         );
     }
 }
-
-AppointmentsTable.propTypes = {
-    defaultHighlightedRowId: PropTypes.number
-};

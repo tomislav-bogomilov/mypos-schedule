@@ -33,6 +33,14 @@ class ScheduleController extends AbstractController
     }
 
     /**
+    * @Route("/appointment/list", name="appointments_list")
+    */
+    public function allAppointmentsList(): Response
+    {
+        return $this->render('dashboard/appointments_list.twig');
+    }
+
+    /**
      * @Route("/schedule", name="schedule")
      */
     public function index(): Response

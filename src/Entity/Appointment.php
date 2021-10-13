@@ -17,7 +17,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     },
  *     normalizationContext={
  *        "groups" ={"read"}
- *     }
+ *     },
+ *     attributes={"pagination_items_per_page"=5}
+ *
  *
  * )
  * @ORM\Entity(repositoryClass=AppointmentRepository::class)
@@ -28,6 +30,7 @@ class Appointment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
