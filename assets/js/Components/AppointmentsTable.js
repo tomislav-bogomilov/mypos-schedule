@@ -1,15 +1,16 @@
 import React, {Component} from "react";
-import PropTypes from 'prop-types';
-import { getPaginatedAppointments } from "../Api/retrieve_appointments";
+import { getPaginatedAppointments } from "../Api/appointment_calls";
+import { deleteAppointment } from "../Api/appointment_calls";
 import ReactPaginate from 'react-paginate';
 import ReactDOM from 'react-dom';
-
+import DateRangeColumnFilter from './DateRangeColumnFilter';
 
 export default class AppointmentsTable extends Component {
     constructor(props) {
         super(props);
 
         this.handlePageClick = this.handlePageClick.bind(this);
+        this.handleDeleteClick = this.handleDeleteClick.bind(this);
 
         this.state = {
             appointments: [],
@@ -63,6 +64,34 @@ export default class AppointmentsTable extends Component {
         this.getAppointments(this.state.currentPage);
     }
 
+    handleDeleteClick(event, appointmentId) {
+        console.log(event);
+        /*
+        this.setState((prevState) => {
+            return {
+                repLogs: prevState.repLogs.map(repLog => {
+                    if (repLog.id !== id) {
+                        return repLog;
+                    }
+
+                    return {...repLog, isDeleting: true};
+                })
+            };
+        });
+        */
+        deleteAppointment(appointmentId)
+            .then(() => {
+                // remove the rep log without mutating state
+                // filter returns a new array
+                this.setState((prevState) => {
+                    return {
+                        appointments: prevState.appointments.filter(appointment => appointment.id !== appointmentId)
+                    };
+                });
+
+            });
+    }
+
     handlePageClick(data) {
         // fix paginator indexing from page 0
         const page = data.selected + 1;
@@ -74,6 +103,7 @@ export default class AppointmentsTable extends Component {
 
         return (
             <div>
+                {/*<DateRangeColumnFilter/>*/}
                 <table className="table table-striped table-bordered">
                     <thead>
                     <tr>
@@ -81,6 +111,7 @@ export default class AppointmentsTable extends Component {
                         <th scope="col">Date</th>
                         <th scope="col">Name</th>
                         <th scope="col">Comment</th>
+                        <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -91,6 +122,11 @@ export default class AppointmentsTable extends Component {
                                 <td>{ appointment.date }</td>
                                 <td>{ appointment.name }</td>
                                 <td>{ appointment.comment }</td>
+                                <td>
+                                    <a href="#" onClick={(event) => this.handleDeleteClick(event, appointment.id) }>
+                                        <span className="fa fa-trash"></span>
+                                    </a>
+                                </td>
                             </tr>
                         );
                     })}

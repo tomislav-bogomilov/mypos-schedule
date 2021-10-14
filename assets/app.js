@@ -10,7 +10,7 @@ import AppointmentForm from './js/Components/AppointmentForm';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import calendarBootstrap from '@fullcalendar/bootstrap';
-import { getAllAppointments } from "./js/Api/retrieve_appointments";
+import { getAllAppointments } from "./js/Api/appointment_calls";
 
 const predicate = 'awesome';
 

@@ -22,3 +22,12 @@ export function getPaginatedAppointments(page = 1) {
             return response.json();
         });
 }
+
+export function deleteAppointment(id) {
+    return fetch(`/api/appointments/${id}`, {
+        method: 'DELETE'
+    }).then(response => {
+        return response.text()
+            .then(text => text ? JSON.parse(text) : '');
+    });
+}
