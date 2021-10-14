@@ -32,7 +32,7 @@ if (document.getElementById('main-dashboard')) {
         .then((data) => {
             const items = data['hydra:member'];
             items.map((item, index) => {
-                allAppointments.push({'title': item.user.firstName, date: item.startDateTime.slice(0, 19).replace('T', ' ')})
+                allAppointments.push({'title': item.user.firstName + ' ' + item.user.lastName, date: item.startDateTime.slice(0, 19).replace('T', ' ')})
             });
 
             render(
@@ -41,6 +41,9 @@ if (document.getElementById('main-dashboard')) {
                     initialView="timeGridWeek"
                     weekends={false}
                     events={allAppointments}
+                    aspectRatio={2.5}
+                    contentHeight={'auto'}
+                    handleWindowResize={'true'}
                 />,
                 document.getElementById('main-dashboard')
             );

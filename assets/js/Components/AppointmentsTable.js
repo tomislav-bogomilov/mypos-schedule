@@ -29,7 +29,8 @@ export default class AppointmentsTable extends Component {
                     const preparedAppointment = {
                         id: item.id,
                         date: item.startDateTime.slice(0, 19).replace('T', ' '),
-                        name: item.user.firstName,
+                        name: item.user.firstName + ' ' + item.user.lastName,
+                        identity: item.user.personalID,
                         comment: item.comment
 
                     };
@@ -65,24 +66,8 @@ export default class AppointmentsTable extends Component {
     }
 
     handleDeleteClick(event, appointmentId) {
-        console.log(event);
-        /*
-        this.setState((prevState) => {
-            return {
-                repLogs: prevState.repLogs.map(repLog => {
-                    if (repLog.id !== id) {
-                        return repLog;
-                    }
-
-                    return {...repLog, isDeleting: true};
-                })
-            };
-        });
-        */
         deleteAppointment(appointmentId)
             .then(() => {
-                // remove the rep log without mutating state
-                // filter returns a new array
                 this.setState((prevState) => {
                     return {
                         appointments: prevState.appointments.filter(appointment => appointment.id !== appointmentId)
@@ -108,7 +93,8 @@ export default class AppointmentsTable extends Component {
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Date</th>
+                        <th scope="col">Appointment Datetime</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Comment</th>
                         <th scope="col">Action</th>
@@ -120,6 +106,7 @@ export default class AppointmentsTable extends Component {
                             <tr key={ appointment.id }>
                                 <td>{ appointment.id }</td>
                                 <td>{ appointment.date }</td>
+                                <td>{ appointment.identity }</td>
                                 <td>{ appointment.name }</td>
                                 <td>{ appointment.comment }</td>
                                 <td>
