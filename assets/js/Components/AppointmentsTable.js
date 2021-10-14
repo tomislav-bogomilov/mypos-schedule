@@ -16,7 +16,8 @@ export default class AppointmentsTable extends Component {
             appointments: [],
             loading: false,
             currentPage: 1,
-            appointmentsPerPage: 7
+            appointmentsPerPage: 7,
+            message: '' // flash message for performed action
         }
     }
 
@@ -68,9 +69,16 @@ export default class AppointmentsTable extends Component {
     handleDeleteClick(event, appointmentId) {
         deleteAppointment(appointmentId)
             .then(() => {
+                // remove flash message after 2 sec.
+                setTimeout(() => {
+                    this.setState({
+                       message: ''
+                    });
+                }, 2000);
                 this.setState((prevState) => {
                     return {
-                        appointments: prevState.appointments.filter(appointment => appointment.id !== appointmentId)
+                        appointments: prevState.appointments.filter(appointment => appointment.id !== appointmentId),
+                        message: 'Successful deletion of appointment with id: ' + appointmentId
                     };
                 });
 
@@ -84,10 +92,15 @@ export default class AppointmentsTable extends Component {
     }
 
     render() {
-        const { appointments, appointmentsPerPage, loading, currentPage } = this.state;
+        const { appointments, message } = this.state;
 
         return (
             <div>
+                {message && (
+                    <div className="alert alert-success text-center">
+                        {message}
+                    </div>
+                )}
                 {/*<DateRangeColumnFilter/>*/}
                 <table className="table table-striped table-bordered">
                     <thead>
