@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\AppointmentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,7 +12,7 @@ class ScheduleController extends AbstractController
     /**
      * @Route("/", name="dashboard")
      */
-    public function welcome(): Response
+    public function dashboard(): Response
     {
         return $this->render('dashboard/main.html.twig');
     }
@@ -25,7 +26,7 @@ class ScheduleController extends AbstractController
     }
 
     /**
-    * @Route("/appointment/history", name="appointments_history")
+    * @Route("/appointments/history", name="appointments_history")
     */
     public function appointmentsHistory(): Response
     {
@@ -33,7 +34,7 @@ class ScheduleController extends AbstractController
     }
 
     /**
-    * @Route("/appointment/list", name="appointments_list")
+    * @Route("/appointments/list", name="appointments_list")
     */
     public function allAppointmentsList(): Response
     {
@@ -41,13 +42,12 @@ class ScheduleController extends AbstractController
     }
 
     /**
-     * @Route("/schedule", name="schedule")
+     * @Route("/appointments/view/{id}", name="schedule")
      */
-    public function index(): Response
+    public function view($id): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ScheduleController.php',
+        return $this->render('dashboard/appointments_view.twig', [
+            'appointmentId' => $id
         ]);
     }
 }

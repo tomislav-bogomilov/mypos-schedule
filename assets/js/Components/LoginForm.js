@@ -2,7 +2,6 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { loginCheck } from '../Api/authentication';
-import { Redirect } from 'react-router-dom'
 
 const LoginForm = () => (
     <div>
@@ -29,6 +28,7 @@ const LoginForm = () => (
                 loginCheck(payload)
                     .then((resp) => {
                         const token = resp.data.token;
+                        // TODO check where is best to hold JWT token and maybe basic user info
                         localStorage.setItem('access_token', token);
                         localStorage.setItem('user_email', values.email,);
                         window.location.href = "/";

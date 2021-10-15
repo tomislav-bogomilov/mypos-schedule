@@ -11,13 +11,15 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import calendarBootstrap from '@fullcalendar/bootstrap';
 import { getAllAppointments } from "./js/Api/appointment_calls";
 import LoginForm from "./js/Components/LoginForm";
+import AppointmentView from "./js/Components/AppointmentView";
 
-//TODO see where is best to check credentials. This will do the basic checking
+//@TODO see where is best to check credentials. This will do the basic checking
 if (!localStorage.getItem('access_token') && location.pathname !== '/login') {
     window.location.href = "/login";
 } else {
+    //@TODO refactor: Bad checking on which page client browser is navigated and render corresponding component.
     if (document.getElementById('appointments-table')) {
-        render(<AppointmentsTable defaultHighlightedRowId={2}/>, document.getElementById('appointments-table'));
+        render(<AppointmentsTable/>, document.getElementById('appointments-table'));
     }
 
     if (document.getElementById('make-appointment-form')) {
@@ -51,6 +53,12 @@ if (!localStorage.getItem('access_token') && location.pathname !== '/login') {
                 );
 
             });
+    }
+
+    if (document.getElementById('appointment-view')) {
+        var wrapper = document.getElementById('appointment-view');
+        var appointmentId = wrapper.dataset.appointmentId;
+        render(<AppointmentView appointmentId={appointmentId} />, wrapper);
     }
 }
 

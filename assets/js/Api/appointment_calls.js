@@ -31,3 +31,12 @@ export function deleteAppointment(id) {
             .then(text => text ? JSON.parse(text) : '');
     });
 }
+
+export function getAppointment(id) {
+    return fetch(`/api/appointments/${id}`, {
+        method: 'GET'
+    }).then(response => {
+        return response.text()
+            .then(text => text ? JSON.parse(text) : '');
+    });
+}

@@ -3,7 +3,6 @@ import { getPaginatedAppointments } from "../Api/appointment_calls";
 import { deleteAppointment } from "../Api/appointment_calls";
 import ReactPaginate from 'react-paginate';
 import ReactDOM from 'react-dom';
-import DateRangeColumnFilter from './DateRangeColumnFilter';
 
 export default class AppointmentsTable extends Component {
     constructor(props) {
@@ -123,6 +122,11 @@ export default class AppointmentsTable extends Component {
                                 <td>{ appointment.name }</td>
                                 <td>{ appointment.comment }</td>
                                 <td>
+                                    <a href={`/appointments/view/${appointment.id}`}>
+                                        <span className="fa fa-eye"></span>
+                                    </a>
+                                    &nbsp;
+                                    &nbsp;
                                     <a href="#" onClick={(event) => this.handleDeleteClick(event, appointment.id) }>
                                         <span className="fa fa-trash"></span>
                                     </a>
