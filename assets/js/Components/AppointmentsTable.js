@@ -21,7 +21,7 @@ export default class AppointmentsTable extends Component {
     }
 
      getAppointments = async(page) => {
-        getPaginatedAppointments(page)
+        getPaginatedAppointments(page, this.props.forClient)
             .then((data) => {
                 const items = data['hydra:member'];
                 this.setState({ appointments: [] });
@@ -38,26 +38,27 @@ export default class AppointmentsTable extends Component {
                     this.setState({ appointments: [...this.state.appointments, preparedAppointment] });
                 });
 
-                const pages = data['hydra:totalItems']/7;
-
-                ReactDOM.render(
-                    <ReactPaginate
-                        previousLabel={'prev'}
-                        nextLabel={'next'}
-                        pageCount={pages}
-                        onPageChange={this.handlePageClick}
-                        containerClassName={'pagination justify-content-center'}
-                        activeClassName={'active'}
-                        pageClassName={'page-item'}
-                        pageLinkClassName={'page-link'}
-                        previousClassName={'page-item'}
-                        previousLinkClassName={'page-link'}
-                        nextClassName={'page-item'}
-                        nextLinkClassName={'page-link'}
-                        breakLinkClassName={'page-link'}
-                    />,
-                    document.getElementById('paginator'));
-
+                const pages = data['hydra:totalItems']/5;
+                if (pages > 1) {
+                    ReactDOM.render(
+                        <ReactPaginate
+                            previousLabel={'prev'}
+                            nextLabel={'next'}
+                            pageCount={pages}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={'pagination justify-content-center'}
+                            activeClassName={'active'}
+                            pageClassName={'page-item'}
+                            pageLinkClassName={'page-link'}
+                            previousClassName={'page-item'}
+                            previousLinkClassName={'page-link'}
+                            nextClassName={'page-item'}
+                            nextLinkClassName={'page-link'}
+                            breakLinkClassName={'page-link'}
+                        />,
+                        document.getElementById('paginator')
+                    );
+                }
             });
     };
 
@@ -113,27 +114,33 @@ export default class AppointmentsTable extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {appointments.map((appointment) => {
-                        return (
-                            <tr key={ appointment.id }>
-                                <td>{ appointment.id }</td>
-                                <td>{ appointment.date }</td>
-                                <td>{ appointment.identity }</td>
-                                <td>{ appointment.name }</td>
-                                <td>{ appointment.comment }</td>
-                                <td>
-                                    <a href={`/appointments/view/${appointment.id}`}>
-                                        <span className="fa fa-eye"></span>
-                                    </a>
-                                    &nbsp;
-                                    &nbsp;
-                                    <a href="#" onClick={(event) => this.handleDeleteClick(event, appointment.id) }>
-                                        <span className="fa fa-trash"></span>
-                                    </a>
-                                </td>
+                    {
+                        appointments.length === 0 ?
+                            <tr>
+                                <td colSpan={6}>No results</td>
                             </tr>
-                        );
-                    })}
+                            : appointments.map((appointment) => {
+                                return (
+                                    <tr key={ appointment.id }>
+                                        <td>{ appointment.id }</td>
+                                        <td>{ appointment.date }</td>
+                                        <td>{ appointment.identity }</td>
+                                        <td>{ appointment.name }</td>
+                                        <td>{ appointment.comment }</td>
+                                        <td>
+                                            <a href={`/appointments/view/${appointment.id}`}>
+                                                <span className="fa fa-eye"></span>
+                                            </a>
+                                            &nbsp;
+                                            &nbsp;
+                                            <a href="#" onClick={(event) => this.handleDeleteClick(event, appointment.id) }>
+                                                <span className="fa fa-trash"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                );
+                        })
+                    }
                     </tbody>
                 </table>
                 <nav id="paginator">

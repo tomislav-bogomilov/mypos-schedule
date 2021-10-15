@@ -16,8 +16,12 @@ export function getAllAppointments() {
  *
  * @returns {Promise<Response>}
  */
-export function getPaginatedAppointments(page = 1) {
-    return fetch('/api/appointments?page=' + page)
+export function getPaginatedAppointments(page = 1, clientEmail = null) {
+    var filterQueryString = '';
+    if (clientEmail) {
+        filterQueryString += '&user.email=' + clientEmail;
+    }
+    return fetch('/api/appointments?page=' + page + filterQueryString)
         .then(response => {
             return response.json();
         });

@@ -18,18 +18,28 @@ if (!localStorage.getItem('access_token') && location.pathname !== '/login') {
     window.location.href = "/login";
 } else {
     //@TODO refactor: Bad checking on which page client browser is navigated and render corresponding component.
+
+    // Appointments List page
     if (document.getElementById('appointments-table')) {
         render(<AppointmentsTable/>, document.getElementById('appointments-table'));
     }
 
+    // My appointments page
+    if (document.getElementById('my-appointments-table')) {
+        render(<AppointmentsTable forClient={localStorage.getItem('user_email')}/>, document.getElementById('my-appointments-table'));
+    }
+
+    // Make appointment page
     if (document.getElementById('make-appointment-form')) {
         render(<AppointmentForm/>, document.getElementById('make-appointment-form'));
     }
 
+    // Login page
     if (document.getElementById('login-form-wrapper')) {
         render(<LoginForm/>, document.getElementById('login-form-wrapper'));
     }
 
+    // Dashboard page
     if (document.getElementById('main-dashboard')) {
         let allAppointments = [];
         getAllAppointments()
@@ -55,6 +65,7 @@ if (!localStorage.getItem('access_token') && location.pathname !== '/login') {
             });
     }
 
+    // Appointment detail view
     if (document.getElementById('appointment-view')) {
         var wrapper = document.getElementById('appointment-view');
         var appointmentId = wrapper.dataset.appointmentId;

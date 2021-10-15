@@ -7,6 +7,8 @@ use App\Repository\AppointmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
@@ -19,10 +21,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *        "groups" ={"read"}
  *     },
  *     attributes={"pagination_items_per_page"=5}
- *
- *
  * )
  * @ORM\Entity(repositoryClass=AppointmentRepository::class)
+ * @ApiFilter(SearchFilter::class, properties={"user.email"})
  */
 class Appointment
 {
