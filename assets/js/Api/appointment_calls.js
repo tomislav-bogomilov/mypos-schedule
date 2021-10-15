@@ -21,7 +21,7 @@ export function getPaginatedAppointments(page = 1, clientEmail = null) {
     if (clientEmail) {
         filterQueryString += '&user.email=' + clientEmail;
     }
-    return fetch('/api/appointments?page=' + page + filterQueryString)
+    return fetch('/api/appointments?page=' + page + filterQueryString + '&order[startDateTime]=desc')
         .then(response => {
             return response.json();
         });
