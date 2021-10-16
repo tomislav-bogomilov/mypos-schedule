@@ -131,11 +131,16 @@ export default class AppointmentsTable extends Component {
                                             <a href={`/appointments/view/${appointment.id}`}>
                                                 <span className="fa fa-eye"></span>
                                             </a>
-                                            &nbsp;
-                                            &nbsp;
-                                            <a href="#" onClick={(event) => this.handleDeleteClick(event, appointment.id) }>
-                                                <span className="fa fa-trash"></span>
-                                            </a>
+                                            {this.props.forClient ? (
+                                                <span>
+                                                    &nbsp;
+                                                    <a href="#" onClick={(event) => this.handleDeleteClick(event, appointment.id) }>
+                                                        <span className="fa fa-trash"></span>
+                                                    </a>
+                                                </span>
+                                                )
+                                            :
+                                                ''}
                                         </td>
                                     </tr>
                                 );
