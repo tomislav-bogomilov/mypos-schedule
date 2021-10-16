@@ -43,9 +43,9 @@ const LoginForm = () => (
                     <div className="form-group">
                         <label htmlFor="email">Email address</label>
                         <Field type="email" name="email" className={'form-control'}/>
-                        <ErrorMessage name="email" component="div" />
+                        <ErrorMessage name="email" component="div" className={'text-danger'}/>
                     </div>
-
+                    <br/>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
                         <Field type="password" name="password" className={'form-control'}/>
@@ -58,6 +58,9 @@ const LoginForm = () => (
                 </Form>
             )}
         </Formik>
+        <p className={'text-center'}>
+            Doesn't have account? <a href={'/register'}>{'-> Register <-'} </a>
+        </p>
     </div>
 );
 

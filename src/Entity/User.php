@@ -55,7 +55,7 @@ class User implements UserInterface
      * @Assert\Length(min=4, max=255)
      * @TODO check regex pattern
      * @Assert\Regex(
-     *     pattern="/ ^(?=.{4,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/",
+     *     pattern="/^(?=.{4,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/",
      *     message="Password should contain at least one upper case letter and one lower case and one special character."
      * )
      */

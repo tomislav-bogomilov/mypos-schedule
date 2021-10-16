@@ -24,4 +24,14 @@ class SecurityController extends AbstractController
         return $this->render('security/logout.html.twig');
     }
 
+    /**
+     * Not the right controller for register but it'll do keeping it simple
+     *
+     * @Route("/register", name="register")
+     */
+    public function register(): Response
+    {
+        return $this->render('security/register.html.twig');
+    }
+
 }

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class PasswordEncodeSubscriber implements EventSubscriberInterface
 {
@@ -33,9 +34,10 @@ class PasswordEncodeSubscriber implements EventSubscriberInterface
     public function encodePassword(ViewEvent $event)
     {
         $user = $event->getControllerResult();
+
         $method = $event->getRequest()->getMethod();
 
-        if (!$user instanceof User || Request::METHOD_POST == $method) {
+        if (!$user instanceof User || Request::METHOD_POST !== $method) {
             return;
         }
 

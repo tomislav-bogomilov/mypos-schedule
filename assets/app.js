@@ -12,11 +12,13 @@ import calendarBootstrap from '@fullcalendar/bootstrap';
 import { getAllAppointments } from "./js/Api/appointment_calls";
 import LoginForm from "./js/Components/LoginForm";
 import AppointmentView from "./js/Components/AppointmentView";
+import RegistrationForm from "./js/Components/RegistrationForm";
+
 
 //@TODO see where is best to check credentials. This will do the basic checking
-console.log(localStorage.getItem('access_token'))
-if (!localStorage.getItem('access_token') && location.pathname !== '/login') {
-    window.location.href = "/login";
+if (!localStorage.getItem('access_token') && location.pathname !== '/login' && location.pathname !== '/register') {
+    //window.location.href = "/login";
+    alert('sa');
 } else {
     //@TODO refactor: Bad checking on which page client browser is navigated and render corresponding component.
 
@@ -38,6 +40,11 @@ if (!localStorage.getItem('access_token') && location.pathname !== '/login') {
     // Login page
     if (document.getElementById('login-form-wrapper')) {
         render(<LoginForm/>, document.getElementById('login-form-wrapper'));
+    }
+
+    // Registration page
+    if (document.getElementById('registration-wrapper')) {
+        render(<RegistrationForm/>, document.getElementById('registration-wrapper'));
     }
 
     // Dashboard page
