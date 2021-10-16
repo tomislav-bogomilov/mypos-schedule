@@ -1,3 +1,5 @@
+import axios from "axios/index";
+
 /**
  * Returns a Promise object with appointments
  *
@@ -43,4 +45,17 @@ export function getAppointment(id) {
         return response.text()
             .then(text => text ? JSON.parse(text) : '');
     });
+}
+
+export function saveAppointment(payload) {
+    const token = localStorage.getItem('access_token');
+
+    return axios.post('/api/appointments', payload,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(result => { console.log(result); return result; })
+        .catch(error => { console.error(error); throw error; });
 }

@@ -54,7 +54,7 @@ class Appointment
     /**
      * @ORM\Column(type="datetime")
      * @Assert\DateTime()
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      */
     private $endDateTime;
 
@@ -89,6 +89,9 @@ class Appointment
     public function setStartDateTime(\DateTimeInterface $startDateTime): self
     {
         $this->startDateTime = $startDateTime;
+        // cloning datetime object so to be modified and automatically set for end of appointment
+        $endDateTime = clone $startDateTime;
+        $this->setEndDateTime($endDateTime->modify('+30 minutes'));
 
         return $this;
     }
