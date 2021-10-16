@@ -8,7 +8,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class AppointmentFixtures extends BaseFixtures implements DependentFixtureInterface
 {
-
     public function load(ObjectManager $manager): void
     {
         for ($appointmentCounter = 1; $appointmentCounter < 200; $appointmentCounter++) {

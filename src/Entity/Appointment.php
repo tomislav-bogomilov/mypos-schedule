@@ -92,7 +92,7 @@ class Appointment
         // cloning datetime object so to be modified and automatically set for end of appointment
         $endDateTime = clone $startDateTime;
 
-        // Getting env from the superglobal $_ENV is bad practice. Making subscriber setting endDateTime property is far better
+        //@TODO Getting env from the super global $_ENV is bad practice! Making subscriber setting endDateTime property is far better
         $this->setEndDateTime($endDateTime->modify('+' . $_ENV["APPOINTMENT_DURATION"] . ' minutes'));
 
         return $this;
