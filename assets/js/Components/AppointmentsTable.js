@@ -86,7 +86,7 @@ export default class AppointmentsTable extends Component {
     }
 
     handlePageClick(data) {
-        // fix paginator indexing from page 0
+        // fixing paginator indexing from page 0
         const page = data.selected + 1;
         this.getAppointments(page);
     }
@@ -139,7 +139,7 @@ export default class AppointmentsTable extends Component {
                                                     </a>
                                                 </span>
                                                 )
-                                            :
+                                                :
                                                 ''}
                                         </td>
                                     </tr>

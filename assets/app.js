@@ -14,6 +14,7 @@ import LoginForm from "./js/Components/LoginForm";
 import AppointmentView from "./js/Components/AppointmentView";
 
 //@TODO see where is best to check credentials. This will do the basic checking
+console.log(localStorage.getItem('access_token'))
 if (!localStorage.getItem('access_token') && location.pathname !== '/login') {
     window.location.href = "/login";
 } else {
