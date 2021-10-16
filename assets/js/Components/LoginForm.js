@@ -5,16 +5,14 @@ import { loginCheck } from '../Api/authentication';
 
 const LoginForm = () => (
     <div>
-        <h1>Insert your credentials</h1>
+        <h1>Enter your credentials:</h1>
         <Formik
             initialValues={{ email: '', password: '' }}
             validate={values => {
                 const errors = {};
                 if (!values.email) {
                     errors.email = 'Required';
-                } else if (
-                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                ) {
+                } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
                     errors.email = 'Invalid email address';
                 }
                 return errors;
@@ -43,13 +41,13 @@ const LoginForm = () => (
             {({ isSubmitting }) => (
                 <Form>
                     <div className="form-group">
-                        <label htmlFor="exampleInputEmail1">Email address</label>
+                        <label htmlFor="email">Email address</label>
                         <Field type="email" name="email" className={'form-control'}/>
                         <ErrorMessage name="email" component="div" />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="exampleInputEmail1">Password</label>
+                        <label htmlFor="password">Password</label>
                         <Field type="password" name="password" className={'form-control'}/>
                         <ErrorMessage name="password" component="div" />
                     </div>
