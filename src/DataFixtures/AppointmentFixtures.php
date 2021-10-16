@@ -16,7 +16,7 @@ class AppointmentFixtures extends BaseFixtures implements DependentFixtureInterf
             $appointment->setUser($this->getRandomReference('regular-user'));
             $appointmentDateTime = $this->generator->dateTimeBetween('-2 weeks', '+4 weeks', 'Europe/Sofia');
             $appointment->setStartDateTime($appointmentDateTime);
-            $appointment->setEndDateTime($appointmentDateTime->modify('+30 minutes'));
+            $appointment->setEndDateTime($appointmentDateTime->modify('+' . $_ENV["APPOINTMENT_DURATION"] . ' minutes'));
             $appointment->setComment($this->generator->realText());
             $manager->persist($appointment);
         }
