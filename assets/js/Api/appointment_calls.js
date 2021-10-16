@@ -53,9 +53,13 @@ export function saveAppointment(payload) {
     return axios.post('/api/appointments', payload,
         {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         })
-        .then(result => { console.log(result); return result; })
-        .catch(error => { console.error(error); throw error; });
+        .then(result => { console.log('Puu', result); return result; })
+        .catch(error => {
+           throw error;
+        });
 }

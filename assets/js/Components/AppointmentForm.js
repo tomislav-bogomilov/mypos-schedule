@@ -26,12 +26,13 @@ const AppointmentForm = () => (
 
                 saveAppointment(payload)
                     .then((resp) => {
-                       //TODO add server side validation
+                        //@TODO change alert to more proper visualization of form feedback
                         alert('Appointment is created!');
                         setSubmitting(false);
                     })
-                    .catch((res) => {
-                        alert(res);
+                    .catch((error) => {
+                        //@TODO using alert and automatic parsing of validation messages (there must be better way to read and visualize)
+                        alert(error.response.data.detail);
                         setSubmitting(false);
                     });
 
