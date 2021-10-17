@@ -10,7 +10,7 @@ class AppointmentFixtures extends BaseFixtures implements DependentFixtureInterf
 {
     public function load(ObjectManager $manager): void
     {
-        for ($appointmentCounter = 1; $appointmentCounter < 200; $appointmentCounter++) {
+        for ($appointmentCounter = 1; $appointmentCounter < 100; $appointmentCounter++) {
             $appointment = new Appointment();
             $appointment->setUser($this->getRandomReference('regular-user'));
             $appointmentDateTime = $this->generator->dateTimeBetween('-2 weeks', '+4 weeks', 'Europe/Sofia');

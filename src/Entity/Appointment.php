@@ -26,10 +26,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *     attributes={"pagination_items_per_page"=5}
  * )
  * @ORM\Entity(repositoryClass=AppointmentRepository::class)
- * @ApiFilter(SearchFilter::class, properties={"user.personalID"})
  * @ApiFilter(OrderFilter::class, properties={"startDateTime"})
  * @ApiFilter(DateFilter::class, properties={"startDateTime"})
- * @ApiFilter(SearchFilter::class, properties={"user.email"})
+ * @ApiFilter(SearchFilter::class, properties={"user.email", "user.personalID"})
  */
 class Appointment
 {
