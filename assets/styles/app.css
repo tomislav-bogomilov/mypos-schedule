@@ -4,3 +4,11 @@ body {
     background: rgb(238,238,238);
     background: radial-gradient(circle, rgba(238,238,238,1) 0%, rgba(185,198,213,1) 100%);
 }
+
+.fc td {
+    background-color: #e8f2ff;
+}
+
+.fc-col-header {
+background-color: #cccccc;
+}

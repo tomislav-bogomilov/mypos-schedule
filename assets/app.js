@@ -17,8 +17,7 @@ import RegistrationForm from "./js/Components/RegistrationForm";
 
 //@TODO see where is best to check credentials. This will do the basic checking
 if (!localStorage.getItem('access_token') && location.pathname !== '/login' && location.pathname !== '/register') {
-    //window.location.href = "/login";
-    alert('sa');
+    window.location.href = "/login";
 } else {
     //@TODO refactor: Bad checking on which page client browser is navigated and render corresponding component.
 
@@ -66,6 +65,7 @@ if (!localStorage.getItem('access_token') && location.pathname !== '/login' && l
                         aspectRatio={2.5}
                         contentHeight={'auto'}
                         handleWindowResize={'true'}
+                        allDaySlot={false}
                     />,
                     document.getElementById('main-dashboard')
                 );

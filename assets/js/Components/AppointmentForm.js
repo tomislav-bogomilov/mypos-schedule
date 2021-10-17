@@ -50,9 +50,11 @@ const AppointmentForm = () => (
                         <Field
                             name="from"
                             render={({from,form:{isSubmitting}})=>(
-                                <Datetime onChange={from=>{
+                                <Datetime
+                                    onChange={from=>{
                                     setFieldValue('from',from)
-                                }}/>
+                                }}
+                                timeConstraints={{ minutes: { step: 30 } }}/>
                             )}
                             className={'form-control'}
                         />

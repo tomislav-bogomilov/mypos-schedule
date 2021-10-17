@@ -19,7 +19,6 @@ export default class AppointmentView extends Component {
 
     componentDidMount() {
         const appointment = getAppointment(this.props.appointmentId).then((data) => {
-            console.log(data);
             this.setState({startDatetime: data.startDateTime});
             this.setState({endDatetime: data.endDateTime});
             this.setState({clientNames: data.user.firstName + ' ' + data.user.lastName});
