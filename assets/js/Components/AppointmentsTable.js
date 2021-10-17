@@ -35,6 +35,7 @@ export default class AppointmentsTable extends Component {
          if (criteria.length < 1) {
              criteria = this.state.criteria
          }
+         console.log(this.props.forClient, criteria);
          getPaginatedAppointments(page, this.props.forClient, criteria)
             .then((data) => {
                 const items = data['hydra:member'];
@@ -113,12 +114,16 @@ export default class AppointmentsTable extends Component {
 
         return (
             <div>
+                {!this.props.forClient && (
+                    <AppointmentsFilter filterCallback={this.applyFilters}/>
+                )}
+
                 {message && (
                     <div className="alert alert-success text-center">
                         {message}
                     </div>
                 )}
-                <AppointmentsFilter filterCallback={this.applyFilters}/>
+
                 <table className="table table-striped table-bordered">
                     <thead>
                     <tr>
