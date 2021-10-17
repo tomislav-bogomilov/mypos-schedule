@@ -31,8 +31,11 @@ export default class RegistrationForm extends Component {
                             errors.lastName = 'Last name is required';
                         }
                         if (!values.personalId) {
-                            errors.personalId = 'PIN is required';
+                            errors.personalId = 'PID is required';
+                        } else if (isNaN(values.personalId)) {
+                            errors.personalId = 'PID must be a number';
                         }
+
                         if (!values.password) {
                             errors.password = 'Password is required';
                         }
@@ -102,7 +105,7 @@ export default class RegistrationForm extends Component {
                             </div>
                             <br/>
                             <div className="form-group">
-                                <label htmlFor="personalId">Password</label>
+                                <label htmlFor="password">Password</label>
                                 <Field type="password" name="password" className={'form-control'}/>
                                 <ErrorMessage name="password" component="div"  className={'text-danger'}/>
                             </div>

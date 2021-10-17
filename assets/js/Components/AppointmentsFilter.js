@@ -92,7 +92,7 @@ export default class AppointmentsFilter extends Component {
                             </div>
                             <div className={'col-3'}>
                                 <div className="form-group">
-                                    <label htmlFor="personalId">PIN (exact)</label>
+                                    <label htmlFor="personalId">Personal ID (exact)</label>
                                     <Field type="text" name="personalId" className={'form-control'}/>
                                     <ErrorMessage name="personalId" component="div"  className={'text-danger'}/>
                                 </div>
