@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import { getPaginatedAppointments } from "../Api/appointment_calls";
 import { deleteAppointment } from "../Api/appointment_calls";
 import ReactPaginate from 'react-paginate';
-import ReactDOM from 'react-dom';
+import ReactDOM, {render} from 'react-dom';
+import AppointmentsFilter from './AppointmentsFilter';
 
 export default class AppointmentsTable extends Component {
     constructor(props) {
@@ -10,18 +11,31 @@ export default class AppointmentsTable extends Component {
 
         this.handlePageClick = this.handlePageClick.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
+        this.applyFilters = this.applyFilters.bind(this);
 
         this.state = {
             appointments: [],
             loading: false,
             currentPage: 1,
-            appointmentsPerPage: 7,
-            message: '' // flash message for performed action
+            message: '', // flash message for performed action
+            criteria: [] // contains filters for applying to applications resultset
         }
     }
 
-     getAppointments = async(page) => {
-        getPaginatedAppointments(page, this.props.forClient)
+    applyFilters(criteria) {
+        //@TODO when filtering reset to 1st page the visual widget
+        let firstPage = 1;
+        this.setState(prevState => ({
+            criteria: criteria
+        }));
+        this.getAppointments(firstPage, criteria);
+    }
+
+     getAppointments = async(page, criteria = []) => {
+         if (criteria.length < 1) {
+             criteria = this.state.criteria
+         }
+         getPaginatedAppointments(page, this.props.forClient, criteria)
             .then((data) => {
                 const items = data['hydra:member'];
                 this.setState({ appointments: [] });
@@ -58,6 +72,9 @@ export default class AppointmentsTable extends Component {
                         />,
                         document.getElementById('paginator')
                     );
+                } else {
+
+                    render('', document.getElementById('paginator'));
                 }
             });
     };
@@ -101,7 +118,7 @@ export default class AppointmentsTable extends Component {
                         {message}
                     </div>
                 )}
-                {/*<DateRangeColumnFilter/>*/}
+                <AppointmentsFilter filterCallback={this.applyFilters}/>
                 <table className="table table-striped table-bordered">
                     <thead>
                     <tr>

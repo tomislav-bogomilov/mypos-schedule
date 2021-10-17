@@ -18,17 +18,32 @@ export function getAllAppointments() {
  *
  * @returns {Promise<Response>}
  */
-export function getPaginatedAppointments(page = 1, clientEmail = null) {
+export function getPaginatedAppointments(page = 1, clientEmail = null, criteria = []) {
     var filterQueryString = '';
     if (clientEmail) {
         filterQueryString += '&user.email=' + clientEmail;
     }
+    if (criteria.pin) {
+        filterQueryString += '&user.personalID=' + criteria.pin;
+    }
+
+    if (criteria.from && criteria.to) {
+        filterQueryString += '&startDateTime[after]=' + criteria.from;
+        filterQueryString += '&startDateTime[before]=' + criteria.to;
+    }
+
     return fetch('/api/appointments?page=' + page + filterQueryString + '&order[startDateTime]=desc')
         .then(response => {
             return response.json();
         });
 }
 
+/**
+ * Deletes appointment
+ *
+ * @param id
+ * @returns {Promise<string>}
+ */
 export function deleteAppointment(id) {
     return fetch(`/api/appointments/${id}`, {
         method: 'DELETE'
@@ -38,6 +53,11 @@ export function deleteAppointment(id) {
     });
 }
 
+/**
+ * Fetches appointment
+ * @param id
+ * @returns {Promise<string>}
+ */
 export function getAppointment(id) {
     return fetch(`/api/appointments/${id}`, {
         method: 'GET'
@@ -58,7 +78,7 @@ export function saveAppointment(payload) {
                 'Accept': 'application/json'
             }
         })
-        .then(result => { console.log('Puu', result); return result; })
+        .then(result => { return result; })
         .catch(error => {
            throw error;
         });

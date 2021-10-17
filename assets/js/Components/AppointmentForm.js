@@ -42,11 +42,6 @@ const AppointmentForm = () => (
                 <Form>
                     <div className="form-group">
                         <label htmlFor="from">Appointment datetime (appointment duration is 30 minutes)</label>
-                        {status && status.msg && (
-                            <p className={`alert ${ status.sent ? "alert-success" : "alert-error"}`}>
-                                {status.msg}
-                            </p>
-                        )}
                         <Field
                             name="from"
                             render={({from,form:{isSubmitting}})=>(

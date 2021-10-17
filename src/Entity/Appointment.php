@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 
 /**
  * @ApiResource(
@@ -26,7 +27,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  * )
  * @ORM\Entity(repositoryClass=AppointmentRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"user.email"})
+ * @ApiFilter(SearchFilter::class, properties={"user.personalID"})
  * @ApiFilter(OrderFilter::class, properties={"startDateTime"})
+ * @ApiFilter(DateFilter::class, properties={"startDateTime"})
  */
 class Appointment
 {

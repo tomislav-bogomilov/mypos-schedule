@@ -56,7 +56,6 @@ export default class RegistrationForm extends Component {
                             password: values.password,
                             passwordRepeated: values.repeatedPassword
                         };
-                        console.log(payload);
 
                         registerUser(payload)
                             .then((resp) => {
