@@ -19,32 +19,24 @@ class AppointmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Appointment::class);
     }
 
-    // /**
-    //  * @return Appointment[] Returns an array of Appointment objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Retrieves overlapping appointments for given time period
+     *
+     * @param $startDateTime
+     * @param $endDatetime
+     * @return mixed
+     */
+    public function getOverlapping($startDateTime, $endDatetime)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('a.startDateTime <= :endDatetimeT')
+            ->andWhere('a.endDateTime >= :startDateTimeT')
+            ->setParameter('startDateTimeT', $startDateTime)
+            ->setParameter('endDatetimeT', $endDatetime)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Appointment
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
 }

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AppointmentRepository;
+use App\Validator\NotOverlapingPeriod;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -49,6 +50,7 @@ class Appointment
      * @Assert\DateTime()
      * @Assert\NotBlank()
      * @Groups({"read", "write"})
+     * @NotOverlapingPeriod
      */
     private $startDateTime;
 
