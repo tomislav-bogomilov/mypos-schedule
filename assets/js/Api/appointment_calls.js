@@ -6,7 +6,16 @@ import axios from "axios/index";
  * @returns {Promise<Response>}
  */
 export function getAllAppointments() {
-    return fetch('/api/appointments?pagination=false')
+    const token = localStorage.getItem('access_token');
+
+    return fetch('/api/appointments?pagination=false',
+        {
+            method: 'get',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        })
         .then(response => {
             return response.json();
         });
@@ -32,7 +41,16 @@ export function getPaginatedAppointments(page = 1, clientEmail = null, criteria 
         filterQueryString += '&startDateTime[before]=' + criteria.to;
     }
 
-    return fetch('/api/appointments?page=' + page + filterQueryString + '&order[startDateTime]=desc')
+    const token = localStorage.getItem('access_token');
+
+    return fetch('/api/appointments?page=' + page + filterQueryString + '&order[startDateTime]=desc',
+        {
+            method: 'get',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        })
         .then(response => {
             return response.json();
         });
@@ -45,8 +63,14 @@ export function getPaginatedAppointments(page = 1, clientEmail = null, criteria 
  * @returns {Promise<string>}
  */
 export function deleteAppointment(id) {
+    const token = localStorage.getItem('access_token');
+
     return fetch(`/api/appointments/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
     }).then(response => {
         return response.text()
             .then(text => text ? JSON.parse(text) : '');
@@ -59,8 +83,14 @@ export function deleteAppointment(id) {
  * @returns {Promise<string>}
  */
 export function getAppointment(id) {
+    const token = localStorage.getItem('access_token');
+
     return fetch(`/api/appointments/${id}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
     }).then(response => {
         return response.text()
             .then(text => text ? JSON.parse(text) : '');

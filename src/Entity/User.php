@@ -94,7 +94,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @Assert\Length(min=4, max=255)
+     * @Assert\Length(min=2, max=255)
      * @Groups({"read"})
      */
     private $lastName;
