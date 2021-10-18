@@ -89,7 +89,7 @@ export default class RegistrationForm extends Component {
                             <div className="form-group">
                                 <label htmlFor="lastName">Last name</label>
                                 <Field type="text" name="lastName" className={'form-control'}/>
-                                <ErrorMessage name="form-group" component="div" className={'text-danger'}/>
+                                <ErrorMessage name="lastName" component="div" className={'text-danger'}/>
                             </div>
                             <br/>
                             <div className="form-group">
